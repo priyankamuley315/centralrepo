@@ -1,1 +1,41 @@
-abcd
+name: Update README.md in multiple repositories
+
+on:
+  workflow_dispatch:  # Allows manual triggering
+
+jobs:
+  update-readmes:
+    runs-on: ubuntu-latest  # Runs the workflow on an Ubuntu runner
+
+    steps:
+      - name: Checkout the central repository
+        uses: actions/checkout@v2
+
+      - name: Set up Git and PAT authentication
+        run: |
+          # Configure Git username and email for GitHub Actions bot
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Read repository list from repo.txt and update README.md
+        run: |
+          # Loop through each repository listed in repo.txt
+          while IFS= read -r repo; do
+            echo "Processing repository: $repo"
+
+            # Clone the repository
+            git clone https://github.com/$repo.git
+            cd $repo
+
+            # Append content to README.md file
+            echo "\n\nUpdated by GitHub Actions: $(date)" >> README.md
+
+            # Commit and push the changes
+            git add README.md
+            git commit -m "Automated update to README.md"
+            git push https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/$repo.git
+
+            # Return to the main directory and clean up
+            cd ..
+            rm -rf $repo
+          done < repo.txt  # Read from the repo.txt file
