@@ -31,7 +31,8 @@ jobs:
             fi
 
             # Change directory to the cloned repository
-            cd $repo || { echo "Failed to cd into repository $repo"; exit 1; }
+            repo_name=$(basename $repo)
+            cd repo_name || { echo "Failed to cd into repository $repo"; exit 1; }
 
             # Append content to README.md file
             echo "\n\nUpdated by GitHub Actions: $(date)" >> README.md
