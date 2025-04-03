@@ -14,8 +14,8 @@ jobs:
       - name: Set up Git and PAT authentication
         run: |
           # Configure Git username and email for GitHub Actions bot
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "priyankamuley315"
+          git config --global user.email "priyankamuley315@gmail.com"
 
       - name: Read repository list from repo.txt and update README.md
         run: |
