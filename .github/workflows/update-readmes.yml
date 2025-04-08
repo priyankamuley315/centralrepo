@@ -35,7 +35,7 @@ jobs:
             cd $repo_name || { echo "Failed to cd into repository $repo"; exit 1; }
 
             # Append content to README.md file
-            echo "version1.0.0" >> README.md
+            echo "\n \nupdated bugithubactions $(date)" >> README.md
 
             # Commit and push the changes
             git add README.md
